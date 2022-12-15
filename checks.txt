@@ -1,0 +1,6 @@
+punto 1 .- usar un array máximo para el huerto. (maximo número de vegetales)
+punto 2.- el crecimiento debe ir generado por un random númber.
+punto 3.- implementar un enum con los tipos de vegetales.
+punto 4.- hay que colocar el número máximo de elementos a colocar.
+punto 5.- huerto solo 1 pero productores y clientes pueden haber varios (entradas salidas del huerto.)
+punto 6.- mostrar por pantalla cuando se ha producido un vegetal (time stamp) y cuando se ha sacado un vegetal(time stamp)
