@@ -1,5 +1,7 @@
 package org.example.domain;
 
+import org.example.constants.CropsConstant;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,23 +9,7 @@ import java.util.List;
 public class Orchard {
     private int maxNumberOfVegetables;
     private List<String>currentVegetables;
-    private final String[] possibleVegetables = new String[]{
-            "lettuce",
-            "cabbage",
-            "onion",
-            "spinach",
-            "potato",
-            "celery",
-            "asparagus",
-            "radish",
-            "broccoli",
-            "artichoke",
-            "tomato",
-            "cucumber",
-            "eggplant",
-            "carrot",
-            "green bean"
-    };
+    private final String[] possibleVegetables = CropsConstant.CROPS;
 
     public List<String> getCurrentVegetables() {
         return currentVegetables;
@@ -83,10 +69,10 @@ public class Orchard {
         }
 
         vegetableToPop = this.getOneByString(this.currentVegetables, vegetable);
-        vegetableExist = this.anyMatch(this.possibleVegetables, vegetableToPop);
+        vegetableExist = this.anyMatch(this.possibleVegetables, vegetableToPop.toLowerCase());
 
         if (!vegetableExist){
-            System.err.println("This type of vegetable cannot exist in  the orchard" + vegetable.toUpperCase());
+            System.err.println("This type of vegetable cannot exist in  the orchard " + vegetable.toUpperCase());
             return;
         }
 
