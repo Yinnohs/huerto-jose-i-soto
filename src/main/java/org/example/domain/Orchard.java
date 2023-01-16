@@ -75,7 +75,7 @@ public class Orchard {
 
 
         try {
-            wait(getRandomNumber() + 1000);
+            wait(getRandomNumber());
             vegetable = this.currentVegetables.remove(0);
             System.out.println(
                     "the Vegetable: "+
