@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
         Orchard myOrd = new Orchard(5);
 
-        Client jose = new Client("Jose", 5,myOrd);
-        Farmer producer = new Farmer("Productora 1", 5, myOrd);
+        Client jose = new Client("armando", 5,myOrd);
+        Farmer producer = new Farmer("Enismatos Menisco", 5, myOrd);
 
 
         producer.start();

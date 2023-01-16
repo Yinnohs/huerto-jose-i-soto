@@ -39,10 +39,10 @@ public class Orchard {
         }
 
         System.out.println("The Farmer: " + farmerName + " is planting " + vegetable + "\n");
-        this.currentVegetables.add(vegetable);
 
         try {
             wait(getRandomNumber());
+            this.currentVegetables.add(vegetable);
             System.out.println(
                     "the crop : "+
                     vegetable +
@@ -73,10 +73,10 @@ public class Orchard {
 
         System.out.println("The Client: " + consumerName + " is consuming a vegetable\n");
 
-        vegetable = this.currentVegetables.remove(0);
 
         try {
-            wait(getRandomNumber());
+            wait(getRandomNumber() + 1000);
+            vegetable = this.currentVegetables.remove(0);
             System.out.println(
                     "the Vegetable: "+
                             vegetable +
