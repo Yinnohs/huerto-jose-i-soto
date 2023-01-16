@@ -9,7 +9,6 @@ import java.util.List;
 public class Orchard {
     private int maxNumberOfVegetables;
     private List<String>currentVegetables;
-    private final String[] possibleVegetables = CropsConstant.CROPS;
 
     public List<String> getCurrentVegetables() {
         return currentVegetables;
@@ -24,22 +23,17 @@ public class Orchard {
         this.currentVegetables = new ArrayList<>();
     }
 
-    public synchronized void produceVegetable(String vegetable){
-        boolean vegetableExist= false;
+    public synchronized void produceVegetable(String vegetable, String farmerName){
         vegetable = vegetable.toLowerCase();
 
-        if (this.currentVegetables.size() == this.maxNumberOfVegetables) {
-            System.err.println("You can't plant any more vegetables in this orchard there are already: "
-                    + this.maxNumberOfVegetables);
-            return;
+        while (this.currentVegetables.size() == this.maxNumberOfVegetables) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        vegetableExist = this.anyMatch(this.possibleVegetables, vegetable);
-
-        if (!vegetableExist){
-            System.err.println("This type of vegetable cannot be plant int the orchard" + vegetable.toUpperCase());
-            return;
-        }
 
         this.currentVegetables.add(vegetable);
 
@@ -48,40 +42,30 @@ public class Orchard {
             System.out.println(
                     "the crop : "+
                     vegetable +
-                    " has been planted at : " +
-                    LocalTime.now()
+                    "\nhas been planted at : " +
+                    LocalTime.now() +
+                    "\nby : " + farmerName
                     );
         } catch (InterruptedException e) {
             System.err.println("Something weird occurred trying to plant the crop");
         }
     }
 
-    public synchronized void consumeVegetable (String vegetable){
+    public synchronized void consumeVegetable (String consumerName){
         String errMsg = "Something occurred during crop consumtion";
-        boolean vegetableExist = false;
         boolean itPop = false;
-        String vegetableToPop= "";
-        vegetable = vegetable.toLowerCase();
+        String vegetable = "";
 
-        if (this.currentVegetables.size() == 0){
-            System.err.println("You cannot consume any vegetables, theres no vegetables in the Orchard");
-            return;
+        while (this.currentVegetables.size() == 0){
+            try {
+                System.out.println(" Esperando para consumir ");
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        vegetableToPop = this.getOneByString(this.currentVegetables, vegetable);
-        vegetableExist = this.anyMatch(this.possibleVegetables, vegetableToPop.toLowerCase());
-
-        if (!vegetableExist){
-            System.err.println("This type of vegetable cannot exist in  the orchard " + vegetable.toUpperCase());
-            return;
-        }
-
-        itPop = this.currentVegetables.remove(vegetableToPop);
-
-        if (!itPop){
-            System.err.println(errMsg);
-            return;
-        }
+        vegetable = this.currentVegetables.remove(0);
 
         try {
             wait(getRandomNumber());
@@ -105,11 +89,10 @@ public class Orchard {
     }
 
     private boolean anyMatch (String[] array, String matcher){
-        boolean itMatch = false;
         for(String string : array){
-            if (string.equals(matcher)) itMatch = true;
+            if (string.equals(matcher)) return true;
         }
-        return  itMatch;
+        return  false;
     }
 
     private  String getOneByString(List<String> array ,String matcher){
