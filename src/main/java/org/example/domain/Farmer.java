@@ -8,19 +8,21 @@ public class Farmer extends Thread {
     private String name;
     private Orchard orchard;
     private int maxCropsToPlant = 0;
+
+    private ArrayList<String> cropsToplant;
     private String[] planteableCrops = CropsConstant.CROPS;
 
 
-    public  Farmer(String name, Orchard orchard, int maxCropsToPlant){
+    public  Farmer(String name, int maxCropsToPlant, Orchard orchard ){
         this.name = name;
         this.orchard = orchard;
         this.maxCropsToPlant = maxCropsToPlant;
+        this.cropsToplant = getRandomCrops(maxCropsToPlant);
     }
 
     public  void run(){
-        ArrayList<String> cropsToplant = this.getRandomCrops(maxCropsToPlant);
 
-        for (String crop : planteableCrops){
+        for (String crop : cropsToplant){
             this.orchard.produceVegetable(crop, this.name);
         }
     }
@@ -34,10 +36,10 @@ public class Farmer extends Thread {
         return  cropsToReturn;
     }
 
-    private int getRandomNumberFromArray (){
+    private long getRandomNumberFromArray (){
         int max = this.planteableCrops.length;
         int min = 1;
         double randomNumber = Math.random()*(max-min+1)+min;
-        return (int) randomNumber;
+        return (long) randomNumber;
     }
 }

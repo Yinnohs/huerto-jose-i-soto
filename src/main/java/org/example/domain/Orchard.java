@@ -25,7 +25,6 @@ public class Orchard {
     }
 
     public synchronized void produceVegetable(String vegetable, String farmerName){
-        vegetable = vegetable.toLowerCase();
         String errMsg = "Something weird occurred trying to plant the crop";
 
         if (this.currentVegetables.size() == this.maxNumberOfVegetables){

@@ -6,15 +6,13 @@ import org.example.domain.Orchard;
 
 public class Main {
     public static void main(String[] args) {
-        Orchard myOrd = new Orchard(10);
+        Orchard myOrd = new Orchard(5);
 
         Client jose = new Client("Jose", 5,myOrd);
-        Client matuzalen = new Client("Matuzalen", 5, myOrd);
-        Farmer producer = new Farmer("Productora 1", myOrd, 10);
+        Farmer producer = new Farmer("Productora 1", 5, myOrd);
 
 
         producer.start();
-        matuzalen.start();
         jose.start();
 
     }
