@@ -21,7 +21,7 @@ public class Farmer extends Thread {
     }
 
     public  void run(){
-
+        setPriority(10);
         for (String crop : cropsToplant){
             this.orchard.produceVegetable(crop, this.name);
         }
