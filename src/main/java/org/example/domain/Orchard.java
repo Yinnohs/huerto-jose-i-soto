@@ -25,12 +25,13 @@ public class Orchard {
 
     public synchronized void produceVegetable(String vegetable, String farmerName){
         vegetable = vegetable.toLowerCase();
+        String errMsg = "Something weird occurred trying to plant the crop";
 
         while (this.currentVegetables.size() == this.maxNumberOfVegetables) {
             try {
                 wait();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                System.err.println(errMsg);
             }
         }
 
@@ -47,7 +48,7 @@ public class Orchard {
                     "\nby : " + farmerName
                     );
         } catch (InterruptedException e) {
-            System.err.println("Something weird occurred trying to plant the crop");
+            System.err.println(errMsg);
         }
     }
 
@@ -61,7 +62,7 @@ public class Orchard {
                 System.out.println(" Esperando para consumir ");
                 wait();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                System.err.println(errMsg);
             }
         }
 
@@ -72,8 +73,9 @@ public class Orchard {
             System.out.println(
                     "the crop : "+
                             vegetable +
-                            " has been consumed at : " +
-                            LocalTime.now()
+                            "\nhas been consumed at : " +
+                            LocalTime.now() +
+                            "\nby : " + consumerName
             );
         } catch (InterruptedException e) {
             System.err.println(errMsg);

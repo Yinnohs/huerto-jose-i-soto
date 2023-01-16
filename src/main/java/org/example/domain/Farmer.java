@@ -1,7 +1,6 @@
 package org.example.domain;
 
 import org.example.constants.CropsConstant;
-import org.example.enums.CropWorkerType;
 
 import java.util.ArrayList;
 
