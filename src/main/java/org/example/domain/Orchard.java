@@ -4,6 +4,7 @@ import org.example.constants.CropsConstant;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Orchard {
@@ -20,22 +21,25 @@ public class Orchard {
 
     public  Orchard(int maxNumberOfVegetables){
         this.maxNumberOfVegetables = maxNumberOfVegetables;
-        this.currentVegetables = new ArrayList<>();
+        this.currentVegetables = Collections.synchronizedList(new ArrayList<>());
     }
 
     public synchronized void produceVegetable(String vegetable, String farmerName){
         vegetable = vegetable.toLowerCase();
         String errMsg = "Something weird occurred trying to plant the crop";
 
+        if (this.currentVegetables.size() == this.maxNumberOfVegetables){
+            System.out.println("The orchard do not have more room for Vegetables\n");
+        }
         while (this.currentVegetables.size() == this.maxNumberOfVegetables) {
             try {
-                wait();
+                wait(100);
             } catch (InterruptedException e) {
                 System.err.println(errMsg);
             }
         }
 
-
+        System.out.println("The Farmer: " + farmerName + " is planting " + vegetable + "\n");
         this.currentVegetables.add(vegetable);
 
         try {
@@ -45,8 +49,8 @@ public class Orchard {
                     vegetable +
                     "\nhas been planted at : " +
                     LocalTime.now() +
-                    "\nby : " + farmerName
-                    );
+                    "\nby : " + farmerName +
+                    "\n");
         } catch (InterruptedException e) {
             System.err.println(errMsg);
         }
@@ -57,25 +61,29 @@ public class Orchard {
         boolean itPop = false;
         String vegetable = "";
 
+        if (this.currentVegetables.size() == 0){
+            System.out.println("the client : " + consumerName + " is waiting for a vegetable\n");
+        }
         while (this.currentVegetables.size() == 0){
             try {
-                System.out.println(" Esperando para consumir ");
-                wait();
+                wait(100);
             } catch (InterruptedException e) {
                 System.err.println(errMsg);
             }
         }
+
+        System.out.println("The Client: " + consumerName + " is consuming a vegetable\n");
 
         vegetable = this.currentVegetables.remove(0);
 
         try {
             wait(getRandomNumber());
             System.out.println(
-                    "the crop : "+
+                    "the Vegetable: "+
                             vegetable +
                             "\nhas been consumed at : " +
                             LocalTime.now() +
-                            "\nby : " + consumerName
+                            "\nby : " + consumerName + "\n"
             );
         } catch (InterruptedException e) {
             System.err.println(errMsg);

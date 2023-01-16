@@ -1,28 +1,22 @@
 package org.example;
 
+import org.example.domain.Client;
+import org.example.domain.Farmer;
 import org.example.domain.Orchard;
 
 public class Main {
     public static void main(String[] args) {
         Orchard myOrd = new Orchard(10);
 
-        // TODO Add new parameter quantity to produce and quantity to consume.
-        CropWorker jose = new CropWorkerBuilder()
-                .setCrops(new String[]{"lettuce", "cabbage","onion"}) // delete this option, get random option
-                .setType(CropWorkerType.FARMER)
-                .setName("jose")
-                .setOrchard(myOrd)
-                .build();
+        Client jose = new Client("Jose", 5,myOrd);
+        Client matuzalen = new Client("Matuzalen", 5, myOrd);
+        Farmer producer = new Farmer("Productora 1", myOrd, 10);
 
-        CropWorker manuel  = new CropWorkerBuilder()
-                .setCrops(new String[]{"lettuce", "cabbage","onion"}) // just consume the first (pop)
-                .setType(CropWorkerType.CLIENT)
-                .setName("adrian")
-                .setOrchard(myOrd)
-                .build();
 
-        jose.run();
-        manuel.run();
+        producer.start();
+        matuzalen.start();
+        jose.start();
+
     }
 
 }

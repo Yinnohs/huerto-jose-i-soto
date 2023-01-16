@@ -19,8 +19,8 @@ public class Farmer extends Thread {
 
     public  void run(){
         ArrayList<String> cropsToplant = this.getRandomCrops(maxCropsToPlant);
+
         for (String crop : planteableCrops){
-            System.out.println("The Client: " + this.name + " is consuming: " + crop);
             this.orchard.produceVegetable(crop, this.name);
         }
     }
@@ -29,15 +29,14 @@ public class Farmer extends Thread {
         ArrayList<String> cropsToReturn = new ArrayList<>();
         int randomNumber = 0;
         for (int i = 0; i < max; i++) {
-            randomNumber = getRandomNumber();
             cropsToReturn.add(this.planteableCrops[randomNumber]);
         }
         return  cropsToReturn;
     }
 
-    private int getRandomNumber (){
+    private int getRandomNumberFromArray (){
         int max = this.planteableCrops.length;
-        int min = 0;
+        int min = 1;
         double randomNumber = Math.random()*(max-min+1)+min;
         return (int) randomNumber;
     }
